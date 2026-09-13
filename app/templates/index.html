@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeepTrace</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>DeepTrace</h1>
+        <p class="subtitle">Upload an image to check for signs of AI manipulation or deepfake generation.</p>
+
+        <form action="/analyze" method="post" enctype="multipart/form-data" class="upload-box">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Analyze Image</button>
+        </form>
+    </div>
+</body>
+</html>

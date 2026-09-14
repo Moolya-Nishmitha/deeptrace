@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <nav class="site-nav">
+        <a href="/">DeepTrace</a>
+        <a href="/support">Get Support</a>
+    </nav>
     <div class="container">
         <h1>Analysis Result</h1>
 
@@ -16,6 +20,12 @@
             single-face photos and should never be the sole basis for an accusation
             or legal action. Always corroborate with additional evidence.
         </div>
+        {% if detection.label == "Deepfake" %}
+            <div class="support-prompt">
+                If this image is being used to harm or impersonate someone, we can help you figure out next steps.
+                <a href="/support">Get guidance →</a>
+            </div>
+        {% endif %}
 
         {% if face_result.face_found %}
             <div class="verdict {{ 'fake' if detection.label == 'Deepfake' else 'real' }}">

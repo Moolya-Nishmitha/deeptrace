@@ -8,7 +8,28 @@
 <body>
     <div class="container">
         <h1>Analysis Result</h1>
+
         <img src="/static/uploads/{{ filename }}" alt="Uploaded image" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;">
+
+        <div class="disclaimer">
+            ⚠️ DeepTrace gives probabilistic signals, not proof. Results work best on
+            single-face photos and should never be the sole basis for an accusation
+            or legal action. Always corroborate with additional evidence.
+        </div>
+
+        {% if face_result.face_found %}
+            <div class="verdict {{ 'fake' if detection.label == 'Deepfake' else 'real' }}">
+                <h2>{{ detection.label }}</h2>
+                <p>{{ detection.confidence }}% confidence</p>
+            </div>
+            <p class="explanation">{{ explanation }}</p>
+        {% else %}
+            <div class="verdict neutral">
+                <h2>No Face Detected</h2>
+                <p>This detector currently focuses on face manipulation and cannot give a meaningful result for this image type.</p>
+            </div>
+        {% endif %}
+
         <table class="meta-table">
             <tr><td>Dimensions</td><td>{{ metadata.width }} × {{ metadata.height }} px</td></tr>
             <tr><td>Format</td><td>{{ metadata.format }}</td></tr>
@@ -16,6 +37,7 @@
             <tr><td>SHA-256</td><td class="hash">{{ metadata.sha256 }}</td></tr>
             <tr><td>EXIF data present</td><td>{{ "Yes" if metadata.exif_found else "No (possible red flag — original camera metadata often missing from manipulated or re-saved images)" }}</td></tr>
         </table>
+
         <a href="/">← Analyze another image</a>
     </div>
 </body>

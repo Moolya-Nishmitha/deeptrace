@@ -67,3 +67,81 @@ button:hover {
     font-family: monospace;
     font-size: 0.8rem;
 }
+
+.verdict {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.verdict.fake {
+    background: #fde8e8;
+    color: #c0392b;
+}
+.verdict.real {
+    background: #e8f8f0;
+    color: #219150;
+}
+
+.disclaimer {
+    background: #fff8e1;
+    color: #7a5c00;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+.verdict.neutral {
+    background: #eef0f3;
+    color: #555;
+}
+.explanation {
+    text-align: left;
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.5;
+    margin: 1rem 0;
+}
+
+.hidden {
+    display: none;
+}
+.support-container button {
+    margin: 0.5rem;
+}
+.support-step {
+    text-align: left;
+    margin: 1.2rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+.support-step h3 {
+    margin-bottom: 0.4rem;
+    color: #1a1a2e;
+}
+.closing-note {
+    font-style: italic;
+    color: #4361ee;
+    margin-top: 1rem;
+}
+.addendum {
+    background: #f4f5f7;
+    padding: 1rem;
+    border-radius: 8px;
+    border-bottom: none;
+}
+.core-resources {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #eee;
+    text-align: left;
+}
+.law-note {
+    font-size: 0.85rem;
+    color: #666;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 1rem;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeepTrace — Support</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container support-container">
+
+        <div id="step-intro">
+            <h1>Get Guidance</h1>
+            <p class="subtitle">Answer a couple of quick questions so we can point you to the right next steps. This takes under a minute.</p>
+            <button onclick="showStep('step-q1')">Start</button>
+        </div>
+
+        <div id="step-q1" class="hidden">
+            <h2>Is the image intimate or sexual in nature?</h2>
+            <button onclick="answer('intimate', true)">Yes</button>
+            <button onclick="answer('intimate', false)">No</button>
+        </div>
+
+        <div id="step-q2" class="hidden">
+            <h2>Is it currently being shared or has it been posted publicly?</h2>
+            <button onclick="answer('spreading', true)">Yes</button>
+            <button onclick="answer('spreading', false)">No / Not sure</button>
+        </div>
+
+        <div id="step-q3" class="hidden">
+            <h2>Do you know who created or shared it?</h2>
+            <button onclick="answer('known', true)">Yes</button>
+            <button onclick="answer('known', false)">No</button>
+        </div>
+
+        <div id="step-result" class="hidden">
+            <div id="result-content"></div>
+
+            <div class="core-resources">
+                <h3>Always available to you</h3>
+                <p><strong>National Cybercrime Portal:</strong> <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in</a></p>
+                <p><strong>National Helpline:</strong> 1930 (24/7)</p>
+                <p class="law-note">Under India's IT Rules 2026 amendment, platforms must act on flagged synthetic/deepfake content within 3 hours, and within 2 hours for non-consensual intimate imagery specifically.</p>
+                <a href="/" class="back-link">← Back to home</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const answers = {};
+
+        function showStep(id) {
+            document.querySelectorAll('.support-container > div').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function answer(key, value) {
+            answers[key] = value;
+
+            if (key === 'intimate') {
+                showStep('step-q2');
+            } else if (key === 'spreading') {
+                showStep('step-q3');
+            } else if (key === 'known') {
+                renderResult();
+            }
+        }
+
+        function renderResult() {
+            const isUrgent = answers.intimate && answers.spreading;
+            const pathKey = isUrgent ? 'urgent' : 'contained';
+
+            fetch(`/support-content/${pathKey}?known=${answers.known}`)
+                .then(res => res.json())
+                .then(data => {
+                    let html = `<h1>${data.title}</h1>`;
+                    data.steps.forEach(step => {
+                        html += `<div class="support-step"><h3>${step.heading}</h3><p>${step.text}</p></div>`;
+                    });
+                    if (data.closing) {
+                        html += `<p class="closing-note">${data.closing}</p>`;
+                    }
+                    if (data.addendum) {
+                        html += `<div class="support-step addendum"><h3>${data.addendum.heading}</h3><p>${data.addendum.text}</p></div>`;
+                    }
+                    document.getElementById('result-content').innerHTML = html;
+                    showStep('step-result');
+                });
+        }
+    </script>
+</body>
+</html>
